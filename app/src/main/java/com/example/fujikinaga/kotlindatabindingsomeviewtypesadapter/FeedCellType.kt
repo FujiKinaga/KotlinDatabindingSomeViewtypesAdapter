@@ -6,7 +6,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.data.FeedData
 import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.databinding.ItemFeedViewBinding
+import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.databinding.ItemInFeedAdViewBinding
 import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.databinding.ItemOfficialAdViewBinding
+
 
 enum class FeedCellType {
     FEED {
@@ -81,15 +83,20 @@ enum class FeedCellType {
     },
     IN_FEED_AD {
         override fun getViewHolder(layoutInflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
-            return InFeedAdViewHolder(ItemFeedViewBinding.inflate(layoutInflater, parent, false))
+            return InFeedAdViewHolder(ItemInFeedAdViewBinding.inflate(layoutInflater, parent, false))
         }
 
         override fun initialize(holder: RecyclerView.ViewHolder, feedData: FeedData, listener: FeedAdapter.OnAdapterInteractionListener) {
             val inFeedAdViewHolder = holder as? InFeedAdViewHolder
-            val binding = inFeedAdViewHolder?.binding as? ItemFeedViewBinding
+            val binding = inFeedAdViewHolder?.binding as? ItemInFeedAdViewBinding
             binding?.also {
-                it.listener = listener
-                it.feedData = feedData
+                if (it.inFeedContainer.childCount > 0) {
+                    it.inFeedContainer.removeAllViews()
+                }
+                val adView = listener.getAdView()
+                val view = adView?.view
+                (view?.parent as? ViewGroup)?.removeView(view)
+                it.inFeedContainer.addView(view)
             }
         }
     },

@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.ObservableArrayList
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.ad.AdView
+import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.ad.AdViewModel
 import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.data.FeedData
 import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.databinding.MainFragmentBinding
 
@@ -29,13 +32,17 @@ class MainFragment : Fragment(), FeedAdapter.OnAdapterInteractionListener {
         val dataList: ObservableArrayList<FeedData> = ObservableArrayList()
         dataList.add(FeedData(FeedCellType.FEED, 1, 10, null))
         dataList.add(FeedData(FeedCellType.SPECIAL_FEED, 2, 20, null))
+        dataList.add(FeedData(FeedCellType.IN_FEED_AD, null, null, null))
         dataList.add(FeedData(FeedCellType.LIMITED_FEED, 3, 30, null))
         dataList.add(FeedData(FeedCellType.CUSTOM_FEED, 4, 40, null))
+        dataList.add(FeedData(FeedCellType.IN_FEED_AD, null, null, null))
         dataList.add(FeedData(FeedCellType.OFFICIAL_AD, 5, null, "http://google.com"))
         dataList.add(FeedData(FeedCellType.FEED, 6, 60, null))
+        dataList.add(FeedData(FeedCellType.IN_FEED_AD, null, null, null))
         dataList.add(FeedData(FeedCellType.SPECIAL_FEED, 7, 70, null))
         dataList.add(FeedData(FeedCellType.OFFICIAL_AD, 8, null, "http://rakuten.com"))
         dataList.add(FeedData(FeedCellType.FEED, 9, 90, null))
+        dataList.add(FeedData(FeedCellType.IN_FEED_AD, null, null, null))
 
         binding.recyclerView.apply {
             setHasFixedSize(true)
@@ -54,5 +61,11 @@ class MainFragment : Fragment(), FeedAdapter.OnAdapterInteractionListener {
 
     override fun onOfficialAdClick(url: String) {
         Toast.makeText(context, "onOfficialAdClick: $url", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getAdView(): AdView? {
+        val activity = activity ?: return null
+        val viewModel = ViewModelProviders.of(activity).get(AdViewModel::class.java)
+        return viewModel.adViewForBindToAdapter
     }
 }

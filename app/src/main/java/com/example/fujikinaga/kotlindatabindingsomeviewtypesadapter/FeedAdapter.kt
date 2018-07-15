@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.ad.AdView
 import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.data.FeedData
 
 class FeedAdapter(private val listener: OnAdapterInteractionListener, private var dataList: ObservableArrayList<FeedData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -15,6 +16,7 @@ class FeedAdapter(private val listener: OnAdapterInteractionListener, private va
         fun onUserIconClick(userId: Int)
         fun onFeedClick(feedId: Int)
         fun onOfficialAdClick(url: String)
+        fun getAdView(): AdView?
     }
 
     init {

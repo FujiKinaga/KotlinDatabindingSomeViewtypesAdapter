@@ -8,6 +8,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.ad.AdViewModel
+import androidx.lifecycle.ViewModelProviders
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +25,11 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         NavigationUI.setupActionBarWithNavController(this, navController)
+
+        val viewModel = ViewModelProviders.of(this).get(AdViewModel::class.java)
+        lifecycle.addObserver(viewModel)
+        // アドジェネのメディエーション配信がActivityのインスタンスを期待しているため、Activity Contextを渡す
+        viewModel.initAdViewList(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
