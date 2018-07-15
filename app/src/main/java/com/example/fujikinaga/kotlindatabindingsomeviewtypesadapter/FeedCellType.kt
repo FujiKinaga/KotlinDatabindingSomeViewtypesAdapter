@@ -21,40 +21,40 @@ enum class FeedCellType {
             }
         }
     },
-    COLLAB_WAITING_FEED {
+    SPECIAL_FEED {
         override fun getViewHolder(layoutInflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
-            return CollabWaitingFeedViewHolder(ItemFeedViewBinding.inflate(layoutInflater, parent, false))
+            return SpecialFeedViewHolder(ItemFeedViewBinding.inflate(layoutInflater, parent, false))
         }
 
         override fun initialize(holder: RecyclerView.ViewHolder, feedData: FeedData) {
-            val collabWaitingFeedViewHolder = holder as? CollabWaitingFeedViewHolder
-            val binding = collabWaitingFeedViewHolder?.binding as? ItemFeedViewBinding
+            val specialFeedViewHolder = holder as? SpecialFeedViewHolder
+            val binding = specialFeedViewHolder?.binding as? ItemFeedViewBinding
             binding?.also {
                 it.feedData = feedData
             }
         }
     },
-    REPOST_FEED {
+    LIMITED_FEED {
         override fun getViewHolder(layoutInflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
-            return RepostFeedViewHolder(ItemFeedViewBinding.inflate(layoutInflater, parent, false))
+            return LimitedFeedViewHolder(ItemFeedViewBinding.inflate(layoutInflater, parent, false))
         }
 
         override fun initialize(holder: RecyclerView.ViewHolder, feedData: FeedData) {
-            val repostFeedViewHolder = holder as? RepostFeedViewHolder
-            val binding = repostFeedViewHolder?.binding as? ItemFeedViewBinding
+            val limitedFeedViewHolder = holder as? LimitedFeedViewHolder
+            val binding = limitedFeedViewHolder?.binding as? ItemFeedViewBinding
             binding?.also {
                 it.feedData = feedData
             }
         }
     },
-    CUSTOM_REPOST_FEED {
+    CUSTOM_FEED {
         override fun getViewHolder(layoutInflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
-            return CustomRepostFeedViewHolder(ItemFeedViewBinding.inflate(layoutInflater, parent, false))
+            return CustomFeedViewHolder(ItemFeedViewBinding.inflate(layoutInflater, parent, false))
         }
 
         override fun initialize(holder: RecyclerView.ViewHolder, feedData: FeedData) {
-            val customRepostFeedViewHolder = holder as? CustomRepostFeedViewHolder
-            val binding = customRepostFeedViewHolder?.binding as? ItemFeedViewBinding
+            val customFeedViewHolder = holder as? CustomFeedViewHolder
+            val binding = customFeedViewHolder?.binding as? ItemFeedViewBinding
             binding?.also {
                 it.feedData = feedData
             }
@@ -118,11 +118,11 @@ enum class FeedCellType {
 
     class FeedViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
-    class CollabWaitingFeedViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
+    class SpecialFeedViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
-    class RepostFeedViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
+    class LimitedFeedViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
-    class CustomRepostFeedViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
+    class CustomFeedViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
     class HeaderAdViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
