@@ -1,11 +1,12 @@
 package com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter
 
-import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.ObservableArrayList
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.data.FeedData
 import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.databinding.MainFragmentBinding
@@ -13,7 +14,7 @@ import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.databinding.
 /**
  * A placeholder fragment containing a simple view.
  */
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), FeedAdapter.OnAdapterInteractionListener {
 
     private lateinit var binding: MainFragmentBinding
 
@@ -26,32 +27,32 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val dataList: ObservableArrayList<FeedData> = ObservableArrayList()
-        dataList.add(FeedData(FeedCellType.FEED))
-        dataList.add(FeedData(FeedCellType.SPECIAL_FEED))
-        dataList.add(FeedData(FeedCellType.LIMITED_FEED))
-        dataList.add(FeedData(FeedCellType.CUSTOM_FEED))
-        dataList.add(FeedData(FeedCellType.HEADER_AD))
-        dataList.add(FeedData(FeedCellType.IN_FEED_AD))
-        dataList.add(FeedData(FeedCellType.OFFICIAL_AD))
-        dataList.add(FeedData(FeedCellType.FEED))
-        dataList.add(FeedData(FeedCellType.SPECIAL_FEED))
-        dataList.add(FeedData(FeedCellType.LIMITED_FEED))
-        dataList.add(FeedData(FeedCellType.CUSTOM_FEED))
-        dataList.add(FeedData(FeedCellType.HEADER_AD))
-        dataList.add(FeedData(FeedCellType.IN_FEED_AD))
-        dataList.add(FeedData(FeedCellType.OFFICIAL_AD))
-        dataList.add(FeedData(FeedCellType.FEED))
-        dataList.add(FeedData(FeedCellType.SPECIAL_FEED))
-        dataList.add(FeedData(FeedCellType.LIMITED_FEED))
-        dataList.add(FeedData(FeedCellType.CUSTOM_FEED))
-        dataList.add(FeedData(FeedCellType.HEADER_AD))
-        dataList.add(FeedData(FeedCellType.IN_FEED_AD))
-        dataList.add(FeedData(FeedCellType.OFFICIAL_AD))
+        dataList.add(FeedData(FeedCellType.FEED, 1, 10, null))
+        dataList.add(FeedData(FeedCellType.SPECIAL_FEED, 2, 20, null))
+        dataList.add(FeedData(FeedCellType.LIMITED_FEED, 3, 30, null))
+        dataList.add(FeedData(FeedCellType.CUSTOM_FEED, 4, 40, null))
+        dataList.add(FeedData(FeedCellType.OFFICIAL_AD, 5, null, "http://google.com"))
+        dataList.add(FeedData(FeedCellType.FEED, 6, 60, null))
+        dataList.add(FeedData(FeedCellType.SPECIAL_FEED, 7, 70, null))
+        dataList.add(FeedData(FeedCellType.OFFICIAL_AD, 8, null, "http://rakuten.com"))
+        dataList.add(FeedData(FeedCellType.FEED, 9, 90, null))
 
         binding.recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = FeedAdapter(dataList)
+            adapter = FeedAdapter(this@MainFragment, dataList)
         }
+    }
+
+    override fun onUserIconClick(userId: Int) {
+        Toast.makeText(context, "onUserIconClick: $userId", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onFeedClick(feedId: Int) {
+        Toast.makeText(context, "onFeedClick: $feedId", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onOfficialAdClick(url: String) {
+        Toast.makeText(context, "onOfficialAdClick: $url", Toast.LENGTH_SHORT).show()
     }
 }

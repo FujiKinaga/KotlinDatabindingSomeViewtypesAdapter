@@ -7,9 +7,15 @@ import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fujikinaga.kotlindatabindingsomeviewtypesadapter.data.FeedData
 
-class FeedAdapter(private var dataList: ObservableArrayList<FeedData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FeedAdapter(private val listener: OnAdapterInteractionListener, private var dataList: ObservableArrayList<FeedData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var recyclerView: RecyclerView? = null
+
+    interface OnAdapterInteractionListener {
+        fun onUserIconClick(userId: Int)
+        fun onFeedClick(feedId: Int)
+        fun onOfficialAdClick(url: String)
+    }
 
     init {
         dataList.addOnListChangedCallback(object : ObservableList.OnListChangedCallback<ObservableList<FeedData>>() {
@@ -60,6 +66,6 @@ class FeedAdapter(private var dataList: ObservableArrayList<FeedData>) : Recycle
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val feedData = dataList[position]
-        feedData.feedCellType.initialize(holder, feedData)
+        feedData.feedCellType.initialize(holder, feedData, listener)
     }
 }
